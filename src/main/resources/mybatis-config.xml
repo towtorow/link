@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	  <typeAliases>
+
+		  <!-- <package name="com.itwill.movie_box"/>  -->
+			<typeAlias type="com.linker.link.member.MemberDTO" alias="member"/>
+			<typeAlias type="com.linker.link.room.RoomDTO" alias="room"/>
+			<typeAlias type="java.lang.Integer" alias="int"/>
+			<typeAlias type="java.lang.String" alias="string"/>
+			<typeAlias type="java.util.HashMap" alias="hashMap"/>
+			<typeAlias type="java.util.Map" alias="map"/>
+	  </typeAliases>
+  	 
+  	<!-- memberMapper Start -->
+  	 <mappers>
+	    <mapper resource="com/linker/link/mapper/MemberMapper.xml"/>
+	    <!-- 
+	    <mapper resource="com/linker/link/mapper/RoomMapper.xml"/>
+	     -->
+	    <!-- 
+	    <mapper resource="com/itwill/parking/mapper/ReservationMapper.xml"/>
+	    <mapper resource="com/itwill/parking/mapper/SalesMapper.xml"/>
+	     -->
+	  </mappers>
+  	<!-- memberMapper End  -->
+  	
+</configuration>

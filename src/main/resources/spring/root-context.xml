@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+   <context:component-scan base-package="com.linker.link"></context:component-scan>
+   <context:property-placeholder location="classpath:spring/db/jdbc.properties"/> 
+	<bean id="springDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+   		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+   		<property name="url" value="${jdbc.url}"/>
+   		<property name="username" value="${jdbc.username}"/>
+   		<property name="password" value="${jdbc.password}"/>
+   </bean>
+   
+   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+   		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+   		<property name="dataSource" ref="springDataSource"/>
+   </bean>         
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"/>
+	</bean>
+	  
+	
+	<bean id="baseMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" abstract="true" lazy-init="true">
+      <property name="sqlSessionTemplate" ref="sqlSession" />
+    </bean>
+ 
+    <bean id="memberMapper" parent="baseMapper">
+      <property name="mapperInterface" value="com.linker.link.mapper.MemberMapper" />
+    </bean>
+	<!-- 
+    <bean id="roomMapper" parent="baseMapper">
+     <property name="mapperInterface" value="com.linker.link.mapper.RoomMapper" />
+    </bean>
+	  -->
+	<!-- ***************  Member DI Start  **************** -->   
+	<bean id="memberDAO" class="com.linker.link.member.MemberDAO">
+		<property name="memberMapper" ref="memberMapper"/>
+	</bean>
+	<!--  
+	<bean id="memberService" class="com.linker.link.member.MemberService">
+		<property name="memberDao" ref="memberDAO"/>
+	</bean>
+	<bean id="roomDAO" class="com.linker.link.room.RoomDAO">
+		<property name="roomMapper" ref="roomMapper"/>
+	</bean>
+	
+	<bean id="roomService" class="com.linker.link.room.RoomService">
+		<property name="roomDao" ref="roomDAO"/>
+	</bean>
+	  -->
+	<!-- ***************  Room DI END  ******************* -->  	
+</beans>

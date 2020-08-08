@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.linker.link.mapper.RoomMapper">
+  
+  		<!-- 방한개찾기 -->
+  		<select id="getRoom" parameterType="java.lang.String" resultType="com.linker.link.room.RoomDTO" >
+  			select * from room where id=#{id}
+  		</select>
+  		
+  		<!-- 방들찾기 -->
+  		<select id="getRooms" resultType="com.linker.link.room.RoomDTO">
+  			select * from room
+  		</select>
+  		
+  		<!-- 방만들기 -->
+  		<insert id="createRoom" parameterType="com.linker.link.room.RoomDTO" >
+  			insert into room(id, pw, name,host,capacity,memberCnt) values(#{id}, #{pw}, #{name}, #{host}, #{capacity})
+  		</insert>
+  		
+  		<!-- 방수정 -->
+  		<update id="updateRoom" parameterType="com.linker.link.room.RoomDTO">
+			update room set pw=#{pw}, name=#{name}, host=#{host}, capacity=#{capacity} where id=#{id}  			
+  		</update>
+  		
+  		<!-- 방삭제 -->
+  		<delete id="deleteRoom" parameterType="java.lang.String">
+  			delete from room where id=#{id}
+  		</delete>
+  		
+  </mapper>
